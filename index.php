@@ -12,7 +12,7 @@
 </head>
 <body class="text-center">
     <main class="form-signin w-100 m-auto">
-  <form>
+  <form action="view/dashboard.php">
     <img class="mb-4" src="/src/img/cerdologo.webp" alt="" width="172" height="172">
     <h1 class="h3 mb-3 fw-normal">Inicie Sesion</h1>
     <div class="form-floating">
