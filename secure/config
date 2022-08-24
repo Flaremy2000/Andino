@@ -1,0 +1,10 @@
+{
+    "conexion": {
+        "server" : "localhost",
+        "user" : "root",
+        "password" : "",
+        "database" : "flaremyn_porkino",
+        "charset" : "utf8",
+        "port": "3306"
+    }
+}

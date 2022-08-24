@@ -12,15 +12,15 @@
 </head>
 <body class="text-center">
     <main class="form-signin w-100 m-auto">
-  <form action="view/dashboard.php">
+  <form id="loginFm" method="POST">
     <img class="mb-4" src="/src/img/cerdologo.webp" alt="" width="172" height="172">
     <h1 class="h3 mb-3 fw-normal">Inicie Sesion</h1>
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="correo">
       <label for="floatingInput">Correo</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pass">
       <label for="floatingPassword">Contraseña</label>
     </div>
 <!-- 
@@ -29,7 +29,7 @@
         <input type="checkbox" value="remember-me"> Remember me
       </label>
     </div> -->
-    <button class="w-100 btn btn-lg btn-danger" type="submit">Iniciar</button>
+    <button id="Btnlogin" class="w-100 btn btn-lg btn-danger" type="submit">Iniciar</button>
 
   </form>
 </main>

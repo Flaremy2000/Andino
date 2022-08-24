@@ -13,17 +13,17 @@
 </head>
 <body  onload='draw(0);' class="text-center">
     <div class="container">
-        <p class="mt-5">
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">
+        <p id="mygrupo" class="mt-5">
+  <button id="comida" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">
     <img src="../src/img/2132817.png" width="100px" height="100px"/>
   </button>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
+  <button id="reporte" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
     <img src="../src/img/1055644.png" width="100px" height="100px" />
   </button>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">
+  <button id="prooveedor" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">
     <img src="../src/img/forbidden.png" width="100px" height="100px" />
   </button>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">
+  <button id="configuracion_general" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">
     <img src="../src/img/306433.png" width="100px" height="100px" />
   </button>
 </p>
@@ -35,19 +35,18 @@
           <div class="col-12 mb-2">
           <div class="form-floating">
             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-              <option selected>Seleccione el Comedero</option>
-              <option value="1">COMEDERO 1</option>
-              <option value="2">COMEDERO 2</option>
+              <option selected>Seleccione contenedor</option>
+              <option value="1">CONTENEDOR 1</option>
             </select>
             <label for="floatingSelect">Control de comederos</label>
           </div>
           </div>
           <div class="col">
-            <div class="GaugeMeter" id="GaugeMeter_1" data-percent="10"></div>
-            <div> Nivel de Comida</div>
+            <div class="GaugeMeter" id="GaugeMeter_1" style="margin-left: auto; margin-right: auto;"></div>
+            <div> Contenedor de Alimento</div>
           </div>
           <div class="col">
-            <div class="GaugeMeter" id="GaugeMeter_1" data-percent="100"></div>
+            <div class="GaugeMeter" id="GaugeMeter_2" data-percent="100" style="margin-left: auto; margin-right: auto;"></div>
             <div> Estado de Agua</div>
           </div>
         </div>
@@ -123,20 +122,23 @@
     </div>
     <div class="collapse multi-collapse" id="multiCollapseExample4">
       <div class="card card-body">
-      <form class="row g-3 text-center">
+      <form class="row g-3 text-center" id="Formconfig" method="GET">
+        <p class="h3">CONTROL DE DOSIFICACION</p>
         <div class="col">
         <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" placeholder="12">
-          <label for="floatingInput">Ingrese tiempo de dosificacion en horas</label>
+          <input type="datetime-local" class="form-control" id="Fechasdosificador" placeholder="12">
+          <label for="Fechasdosificador">Ingrese fecha a dosificar</label>
         </div>
         </div>
+          <button type="submit" class="btn btn-primary mb-3" id="registro_fecha">Registrar fecha</button>
+      </form>
+      </div>
+      <div class="card card-body mt-2">
+      <form class="row g-3 text-center" id="AguaConfig">
+        <p class="h3">ENCENDIDO MANUAL DE AGUA</p>
         <div class="col">
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" placeholder="12">
-          <label for="floatingInput">Ingrese el tamaño del contenedor de alimento en cm</label>
+          <input type="button" class="btn btn-primary mb-3" value="ENCENDER" id="BtnAgua"></input>
         </div>
-        </div>
-          <button type="submit" class="btn btn-primary mb-3">Actualizar datos</button>
       </form>
       </div>
     </div>
