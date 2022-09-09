@@ -71,6 +71,12 @@ class visualizador extends conexion{
         $query->execute();
         return $query;
     }
+
+    function obtener_aguas(){
+        $query = $this->conexion->prepare("SELECT * FROM `bebedero` ORDER BY Id_agua desc limit 1");
+        $query->execute();
+        return $query;
+    }
 }
 
 

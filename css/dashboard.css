@@ -66,11 +66,38 @@ body::after {
 	overflow: hidden;
 	border: 5px solid #1a1a1a;
   }
+  .circle2 {
+	margin-left: auto;
+	margin-right: auto;
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	background: #000;
+
+	position: relative;
+	overflow: hidden;
+	border: 5px solid #1a1a1a;
+  }
 
   .circle::after{
 	content: "";
 	position: absolute;
 	top: 9%;
+	width: 200%;
+	height: 200%;
+	left: -50%;
+
+	background: rgba(102, 147, 243, 0.562);
+	box-shadow: 0 0 20px #5774d4;
+
+	border-radius: 40%;
+	animation: rotate 10s linear forwards infinite;
+
+  }
+  .circle2::after{
+	content: "";
+	position: absolute;
+	top: 93%;
 	width: 200%;
 	height: 200%;
 	left: -50%;

@@ -26,6 +26,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['micro'])){
     printJSON($parametros);
 }
 
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['agua'])){
+
+    $parametros = array();
+    $tem = $visual->obtener_aguas();
+
+    if ($tem->rowCount()){
+        while ($row = $tem->fetch(PDO::FETCH_ASSOC)){
+            $item = array(
+                'mensaje' => 'dato',
+                'estado' => $row['estado']
+            );
+        }
+        array_push($parametros, $item);
+    }
+    printJSON($parametros);
+}
+
 function error($mensaje){
     print_r(json_encode(array('mensaje' => $mensaje)));
 }

@@ -7,11 +7,10 @@
     <link href="../bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/dashboard.css" rel="stylesheet" />
     <script src="../bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.2/chart.min.js"></script>
     <script src="../js/jquery-3.6.0.min.js"></script>
     <title>Porkino</title>
 </head>
-<body  onload='draw(0);' class="text-center">
+<body class="text-center">
     <div class="container">
       <div class="d-flex align-items-end flex-column bd-highlight mb-1">
         <div class="p-2 bd-highlight mt-2">
@@ -48,7 +47,7 @@
             <div> Contenedor de Alimento</div>
           </div>
           <div class="col">
-            <div class="circle"></div>
+            <div id="bolaagu" class=""></div>
             <div class="mt-2"> Estado de Agua</div>
           </div>
         </div>
@@ -61,21 +60,23 @@
         <div class="row">
           <div class="col">
           <div class="form-floating mb-3">
-            <input type="datetime-local" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Fecha Inicio</label>
+            <input type="date" class="form-control" id="fecha_ini" placeholder="name@example.com" min="2022-08-17">
+            <label for="fecha_ini">Fecha Inicio</label>
           </div>
           </div>
           <div class="col">
           <div class="form-floating mb-3">
-            <input type="datetime-local" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Fecha Final</label>
+            <input type="date" class="form-control" id="fecha_fin" placeholder="name@example.com" min="2022-08-17">
+            <label for="fecha_fin">Fecha Final</label>
           </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-3">Generar reporte</button>
+        <a class="btn btn-primary mb-3" id="btrepr">Generar reporte</a>
         </form>
 
-        <canvas id="myChart" width="200" height="200"></canvas>
+        <img id="showreport">
+
+        <a id="downloadbt" class="btn btn-info mb-3" download="Informe">Descargar Reporte</a>
 
       </div>
     </div>
@@ -91,7 +92,7 @@
       <div class="collapse multi-collapse" id="multiCollapseExample4">
       <div class="card card-body">
         <p class="h3 text-center mb-4 border-bottom">GESTION DE USUARIO</p>
-        <form action="#" method="POST">
+        <form method="POST">
         <a id="crearuser" class="btn btn-primary mb-3">REGISTRAR USUARIO</a>
         </form>
       <div class="list-group">
@@ -182,6 +183,61 @@
       </div>
   </div>
   
+  <!--- Crear Proveedor ---->
+  <div class="modal fade" id="modalprovcre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>REGISTRAR NUEVO PROVEEDOR</h4>
+          <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </div>
+        <div class="modal-body">
+          <form role="form" action="../backend/crudprov.php?cpro" method="POST" id="cprovid" name="cprovid" enctype="multipart/form-data">
+            <!-- Nombre Proveedor-->
+            <div class="form-floating">
+              <input class="form-control mb-3" placeholder="Ingrese el nombre del proveedor" id="nombre_pro" name="nombre_pro" type="text" required>
+              <label for="nombre_pro">Nombre Proveedor</label>
+            </div>
+            <!-- Contacto -->
+            <div class="form-floating">
+              <input class="form-control mb-3" placeholder="Ingrese el numero de contacto" id="contacto_prov" name="contacto_prov" type="text" required>
+              <label for="contacto_prov">Contacto</label>
+            </div>
+            <!-- Correo -->
+            <div class="form-floating">
+              <input class="form-control mb-3" placeholder="Ingrese su correo" id="correo_prov" name="correo_prov" type="email" required>
+              <label for="correo_prov">Correo</label>
+            </div>
+            <!-- empresa -->
+            <div class="form-floating">
+              <input class="form-control mb-3" placeholder="Ingrese la empresa asociada" id="empresa_prov" name="empresa_prov" type="text" required>
+              <input id="imagen_vieja" name="imagen_vieja" type="hidden" required>
+              <input id="id_pro" name="id" type="hidden" required>
+              <label for="empresa_prov">Empresa</label>
+            </div>
+            <!-- Descripcion --->
+            <div class="form-floating">
+              <textarea class="form-control mb-3" placeholder="Escribe una descripcion corta" id="descripcion" name="descripcion" style="height: 100px"></textarea>
+              <label for="descripcion">Descripcion</label>
+            </div>
+            <div class="mb-3">
+              <label for="title_prov" class="form-label">Imagen de la empresa</label>
+              <input class="form-control" type="file" id="title_prov" name="title_prov" >
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-info" onclick="guardar_proveedor()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+            <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+          </svg>
+          Guardar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+  
   <!--- Editar Usuario ---->
   <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -238,6 +294,61 @@
           </div>
       </div>
   </div>
+ 
+  <!--- Editar Proveedor ---->
+  <div class="modal fade" id="modalproved" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>EDITAR PROVEEDOR</h4>
+          <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </div>
+        <div class="modal-body">
+          <form role="form" action="../backend/crudprov.php?edprov" method="POST" id="fomi" name="fomi" enctype="multipart/form-data" >
+            <!-- Nombre Proveedor-->
+            <div class="form-floating">
+              <input class="form-control mb-3" placeholder="Ingrese el nombre del proveedor" id="enombre_pro" name="nombre_pro" type="text" required>
+              <label for="enombre_pro">Nombre Proveedor</label>
+            </div>
+            <!-- Contacto -->
+            <div class="form-floating">
+              <input class="form-control mb-3" placeholder="Ingrese el numero de contacto" id="econtacto_prov" name="contacto_prov" type="text" required>
+              <label for="econtacto_prov">Contacto</label>
+            </div>
+            <!-- Correo -->
+            <div class="form-floating">
+              <input class="form-control mb-3" placeholder="Ingrese su correo" id="ecorreo_prov" name="correo_prov" type="email" required>
+              <label for="ecorreo_prov">Correo</label>
+            </div>
+            <!-- empresa -->
+            <div class="form-floating">
+              <input class="form-control mb-3" placeholder="Ingrese la empresa asociada" id="eempresa_prov" name="eempresa_prov" type="text" required>
+              <label for="eempresa_prov">Empresa</label>
+              <input id="eid_pro" name="id" type="hidden" required>
+              <input id="eimagen_vieja" name="imagen_vieja" type="hidden" required>
+            </div>
+            <!-- Descripcion --->
+            <div class="form-floating">
+              <textarea class="form-control mb-3" placeholder="Escribe una descripcion corta" id="edescripcion" name="edescripcion" style="height: 100px"></textarea>
+              <label for="edescripcion">Descripcion</label>
+            </div>
+            <div class="mb-3">
+              <label for="etitle_prov" class="form-label">Imagen de la empresa</label>
+              <input class="form-control " type="file" id="etitle_prov" name="etitle_prov" >
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-info" onclick="modificar_datos_proveedor()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+            <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+          </svg>
+          Editar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!--- Eliminar Usuario ---->
   <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -255,6 +366,33 @@
         </div>
         <div class="modal-footer">
           <a class="btn btn-danger" onclick="eliminar_usuario()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+          </svg>
+          Eliminar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!--- Eliminar Proveedor ---->
+  <div class="modal fade" id="modalprovel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>ELIMINAR PROVEEDOR</h4>
+          <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </div>
+        <div class="modal-body">
+          <form role="form" method="post" id="fos" name="fos">
+            <label class="h3">Esta seguro que desea eliminar al proveedor?</label>
+            <input id="elpr" name="elpr" type="hidden" required>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-danger" onclick="eliminar_proveedor()">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>

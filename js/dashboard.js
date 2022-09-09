@@ -21,46 +21,7 @@ $(document).ready(function(){
     }
     
     obtener_comida(5000);
-
-    // //Charts
-    if($('#multiCollapseExample2').length){
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: 'Periodo de consumo',
-                    data: [5, 4, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-        
-    }
+    obtener_agua(5000);
 
     $('#registro_fecha').on('click', registrar_fecha);
     $('#BtnAgua').on('click', cambiar_estado_agua);
@@ -82,6 +43,16 @@ $(document).ready(function(){
     $('#crearuser').click((e)=>{
         $("#modalnuevo").modal('show');
     });
+    $('#crearprov').click((e)=>{
+        $("#modalprovcre").modal('show');
+    });
+    
+    $('#btrepr').click((e)=>{
+        e.preventDefault();
+        generar_reporte();
+    });
+
+    
 
     obtener_usuarios(cargo);
     obtener_proveedores();
@@ -97,6 +68,29 @@ function obtener_comida(tiempo){
             success: (res)=>{
                 $.each(res, (index, item)=>{
                     $("#GaugeMeter_1").gaugeMeter({percent:item.llenura});
+                });
+            }
+        });
+    }, tiempo);
+}
+
+// Se obtiene la ultima entrada de comida del sistema
+function obtener_agua(tiempo){
+    setInterval(()=>{
+        $.ajax({
+            url: '../backend/apialimento.php?agua',
+            method: 'get',
+            dataType: 'json',
+            success: (res)=>{
+                $.each(res, (index, item)=>{
+                    console.log(item.estado);
+                    if(item.estado == '0'){
+                        $("#bolaagu").removeClass('circle')
+                        .addClass('circle2')
+                    }else if(item.estado == '1'){
+                        $("#bolaagu").removeClass('circle2')
+                        .addClass('circle')
+                    }
                 });
             }
         });
@@ -231,12 +225,12 @@ function obtener_proveedores(){
                           <p class="card-text">${item.description}</p>
                           <p class="card-text">
                           <small class="text-muted">contacto: (+593) - ${item.contacto} <br> correo: ${item.correo}</small></p>
-                          <a href="#" class="card-link btn btn-success" onclick="editar_proveedor('${ item.id }', '${item.nombre}', '${item.description}', '${item.contacto}', '${item.correo}', '${item.empresa}', '${item.imagen}')">
+                          <a class="card-link btn btn-success" onclick="editar_proveedor('${ item.id }', '${item.nombre}', '${item.description}', '${item.contacto}', '${item.correo}', '${item.empresa}', '${item.imagen}')">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                           </svg>
                         </a>
-                        <a href="#" class="card-link btn btn-danger" onclick="eliminar_proveedor('${ item.id }')">
+                        <a class="card-link btn btn-danger" onclick="eliminar_pr('${item.id}')">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -330,59 +324,57 @@ function modificar_datos(){
 }
 //Abre el modal para editar proveedor 
 function editar_proveedor(id, nombre, description, contacto, correo, empresa, imagen){
-    $("#epnombre").val(nombre);
-    $("#epdescription").val(description);
-    $("#epcontacto").val(contacto);
-    $("#epcorreo").val(correo);
-    $("#epempresa").val(empresa);
-    $("#epvimagen").val(imagen);
-    $("#epid").val(id);
-    $("#modal2").modal('show');
+    $("#enombre_pro").val(nombre);
+    $("#edescripcion").val(description);
+    $("#econtacto_prov").val(contacto);
+    $("#ecorreo_prov").val(correo);
+    $("#eempresa_prov").val(empresa);
+    $("#eimagen_vieja").val(imagen);
+    $("#eid_pro").val(id);
+    $("#modalproved").modal('show');
 }
+
 // Abre el modal para eliminar proveedor 
-function eliminar_proveedor(id){
-    $('#elpid').val(id);
-    $("#modal3").modal('show');
+function eliminar_pr(ids){
+    $('#elpr').val(ids);
+    $("#modalprovel").modal('show');
 }
 
 
 // Es para crear un nuevo proveedor
 function guardar_proveedor(){
-    $('#form2').submit((event)=>{
-        event.preventDefault();
-    });
-    $.ajax({
-        url: `../backend/cruduser.php?cnombre=${$("#nombre").val()}&apellido=${$("#apellido").val()}&nick=${$("#nick").val()}&correo=${$("#correo").val()}&clave=${$("#clave").val()}&estado=${$("#cargo").val()}`,
-        method: 'get',
-        dataType: 'json',
-        success: (res)=>{
-            $.each(res, (index, item)=>{
-                if(item.mensaje == 'uc'){
-                    $('#listprov').empty();
-                    $("#modalnuevo").modal('hide')
-                    obtener_usuarios();
-                }else{
-                    alert(`Error al crear el usuario`);
-                }
-            });
-        }
-    });
+    // var parametros = .serialize();
+    $("#cprovid").submit();
+    // $.ajax({
+        //     data: parametros,
+        //     url: `../backend/crudprov.php?cpro`,
+        //     method: 'post',
+        //     dataType: 'json',
+        //     success: (res)=>{
+    //         $.each(res, (index, item)=>{
+    //             if(item.mensaje == 'uc'){
+        //                 $('#listprov').empty();
+    //                 $("#modalprovcre").modal('hide')
+    //                 obtener_usuarios();
+    //             }else{
+        //                 alert(`Error al crear el usuario`);
+    //             }
+    //         });
+    //     }
+    // });
 }
 // Sirva para eliminar proveedor 
 function eliminar_proveedor(){
-    $('#form4').submit((event)=>{
-        event.preventDefault();
-    });
     $.ajax({
-        url: `../backend/cruduser.php?elid=${ $("#elid").val() }`,
+        url: `../backend/crudprov.php?elid=${ $("#elpr").val() }`,
         method: 'get',
         dataType: 'json',
         success: (res)=>{
             $.each(res, (index, item)=>{
                 if(item.mensaje == 'eli'){
                     $('#listprov').empty();
-                    $("#modal3").modal('hide');
-                    obtener_usuarios();
+                    $("#provel").modal('hide');
+                    obtener_proveedores();
                 }else{
                     alert("Error al eliminar al usuario");
                 }
@@ -392,18 +384,41 @@ function eliminar_proveedor(){
 }
 // Es para editar informacion de un proveedor 
 function modificar_datos_proveedor(){
+    $("#fomi").submit();
+    // var parametros = $("#fomi").serialize();
+    // $.ajax({
+        //     data: parametros,
+        //     url: `../backend/crudprov.php?edprov`,
+        //     type: 'post',
+        //     dataType: 'json',
+        //     success: (resp)=> {
+            //         $.each(resp, (index, item)=>{
+                //             if(item.mensaje == 'ped'){
+                    //                 $('#listprov').empty();
+    //                 $("#modalproved").modal('hide');
+    //                 obtener_proveedores();
+    //             }else{
+        //                 alert(`Error al eliminar el usuario`);
+        //             }
+        //         });
+        //     }
+        // });
+    }
+// Es para editar informacion de un usuario *
+function generar_reporte(){
     $.ajax({
-        url: `../backend/cruduser.php?eid=${$("#eid").val()}&nombre=${$("#enombre").val()}&apellido=${$("#eapellido").val()}&nick=${$("#enick").val()}&correo=${$("#ecorreo").val()}&clave=${$("#eclave").val()}&estado=${$("#ecargo").val()}`,
+        url: `../backend/genreport.php?reporte&inicio=${$('#fecha_ini').val()}&fin=${$('#fecha_fin').val()}`,
         type: 'get',
         dataType: 'json',
         success: (resp)=> {
+            $('#showreport').removeAttr("src");
+            $('#downloadbt').removeAttr("href");
             $.each(resp, (index, item)=>{
-                if(item.mensaje == 'ued'){
-                    $('#listprov').empty();
-                    $("#modal2").modal('hide');
-                    obtener_usuarios();
+                if(item.mensaje == 'ss'){
+                    $('#showreport').attr("src", "../src/documents/"+item.nombre+".png");
+                    $('#downloadbt').attr("href", "../src/documents/pdfs/"+item.nombre+".pdf");
                 }else{
-                    alert(`Error al eliminar el usuario`);
+                    alert(`Error al generar el reporte`);
                 }
             });
         }

@@ -41,59 +41,56 @@ if($_SERVER['REQUEST_METHOD']== 'GET' && isset($_GET['proveedor'])){
 
 //Editar usuarios
 
-if($_SERVER['REQUEST_METHOD']== 'GET' && isset($_GET['eid'])){
+if($_SERVER['REQUEST_METHOD']== 'POST' && isset($_GET['edprov'])){
 
     $datos = array();
-    $id = $_GET['eid'];
-    $nombre = $_GET['nombre'];
-    $apellido = $_GET['apellido'];
-    $nick = $_GET['nick'];
-    $correo = $_GET['correo'];
-    $clave = password_hash($_GET['clave'], PASSWORD_DEFAULT);
-    $estado = $_GET['estado'];
+    $id = $_POST['id'];
+    $nombre = $_POST['nombre_pro'];
+    $contacto = $_POST['contacto_prov'];
+    $correo = $_POST['correo_prov'];
+    $empresa = $_POST['eempresa_prov'];
+    $description = $_POST['edescripcion'];
+    $imagen_temp = $_FILES['etitle_prov']['tmp_name'];
+    $imagen_name = $_FILES['etitle_prov']['name'];
+    $imagen_vieja = $_POST['imagen_vieja'];
 
-    $result = $prov->editar_proveedor($id, $nombre, $apellido, $nick, $correo, $clave, $estado);
+    if(move_uploaded_file($imagen_temp, "../src/img/empresas/".basename($imagen_name))){
+        $result = $prov->editar_proveedor($id, $nombre, $description, $contacto, $correo, $empresa, $imagen_name);
+    }else{
+        $result = $prov->editar_proveedor_si($id, $nombre, $description, $contacto, $correo, $empresa);
+    }
 
     if($result){
-        $item = array(
-            'mensaje' => "ued",
-        );
-        array_push($datos, $item);
+        header("Location: /");
     }else{
-        $item = array(
-            'mensaje' => "uned",
-        );
-        array_push($datos, $item);
+        header("Location: /e");
     }
-    printJSON($datos);
 }
 
 // Crear usuarios
 
-if($_SERVER['REQUEST_METHOD']== 'GET' && isset($_GET['cnombre'])){
+if($_SERVER['REQUEST_METHOD']== 'POST' && isset($_GET['cpro'])){
 
     $datos = array();
-    $nombre = $_GET['cnombre'];
-    $apellido = $_GET['apellido'];
-    $nick = $_GET['nick'];
-    $correo = $_GET['correo'];
-    $clave = password_hash($_GET['clave'], PASSWORD_DEFAULT);
-    $estado = $_GET['estado'];
+    $nombre = $_POST['nombre_pro'];
+    $contacto = $_POST['contacto_prov'];
+    $correo = $_POST['correo_prov'];
+    $empresa = $_POST['empresa_prov'];
+    $description = $_POST['descripcion'];
+    $imagen_temp = $_FILES['title_prov']['tmp_name'];
+    $imagen_name = $_FILES['title_prov']['name'];
 
-    $result = $prov->guardar_proveedor($nombre, $apellido, $nick, $correo, $clave, $estado);
+    if(move_uploaded_file($imagen_temp, "../src/img/empresas/".basename($imagen_name))){
+        $result = $prov->guardar_proveedor($nombre, $description, $contacto, $correo, $empresa, $imagen_name);
+    }else{
+        $result = false;
+    }
 
     if($result){
-        $item = array(
-            'mensaje' => "uc",
-        );
-        array_push($datos, $item);
+        header("Location: /");
     }else{
-        $item = array(
-            'mensaje' => "unc",
-        );
-        array_push($datos, $item);
+        header("Location: /?e");
     }
-    printJSON($datos);
 }
 
 //Eliminar usuarios
