@@ -7,6 +7,7 @@
     <link href="../bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/dashboard.css" rel="stylesheet" />
     <script src="../bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="src/img/cerdologo.webp">
     <script src="../js/jquery-3.6.0.min.js"></script>
     <title>Porkino</title>
 </head>
@@ -17,20 +18,20 @@
           <input type="button" class="btn btn-danger" id="closesession" value="Desconectase">
         </div>
       </div>
-      <p id="mygrupo" class="mt-5">
-        <button id="comida" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">
+      <p id="mygrupo" class="mt-5 mb-2">
+        <button id="comida" class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">
           <img src="../src/img/2132817.png" width="100px" height="100px"/>
         </button>
-        <button id="reporte" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
+        <button id="reporte" class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
           <img src="../src/img/1055644.png" width="100px" height="100px" />
         </button>
-        <button id="prooveedor" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">
+        <button id="prooveedor" class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">
           <img src="../src/img/forbidden.png" width="100px" height="100px" />
         </button>
-        <button id="users" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">
+        <button id="users" class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" aria-expanded="false" aria-controls="multiCollapseExample4">
           <img src="../src/img/219986.png" width="100px" height="100px" />
         </button>
-        <button id="configuracion_general" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample5" aria-expanded="false" aria-controls="multiCollapseExample5">
+        <button id="configuracion_general" class="btn btn-primary mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample5" aria-expanded="false" aria-controls="multiCollapseExample5">
           <img src="../src/img/306433.png" width="100px" height="100px" />
         </button>
       </p>
@@ -47,7 +48,8 @@
             <div> Contenedor de Alimento</div>
           </div>
           <div class="col">
-            <div id="bolaagu" class=""></div>
+          <div class="GaugeMeter" id="GaugeMeter_gua" style="margin-left: auto; margin-right: auto;"></div>
+            <!-- <div id="bolaagu" class=""></div> -->
             <div class="mt-2"> Estado de Agua</div>
           </div>
         </div>
@@ -76,7 +78,7 @@
 
         <img id="showreport">
 
-        <a id="downloadbt" class="btn btn-info mb-3" download="Informe">Descargar Reporte</a>
+        <a id="downloadbt" class="btn btn-info mb-3 disabled" download="Informe">Descargar Reporte</a>
 
       </div>
     </div>

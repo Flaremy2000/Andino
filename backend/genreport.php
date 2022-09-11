@@ -8,7 +8,7 @@ require '../Fpdf/fpdf.php';
 
 $pdf = new FPDF();
 
-header('Content-type: application/json');
+// header('Content-type: application/json');
 $visual = new visualizador();
 
 date_default_timezone_set("America/Guayaquil");
@@ -102,22 +102,68 @@ $graph->img->Stream($fileName);
 // $graph->img->Headers();
 // $graph->img->Stream();
 
-
+$fecha_random = randomDate($inicio, $fin);
+$tipo_dano;
+switch(rand(0,4)){
+    case 1:
+        $tipo_dano= "se notifico una traba en la compuerta";
+        break;
+    case 2:
+        $tipo_dano= "se notifico falta de alimento a dosificar";
+        break;
+    case 3:
+        $tipo_dano= "se detecto una caida de tension en el motor de apertura";
+        break;
+    default:
+        $tipo_dano= "se notifico un fallo en el registro de dosificacion";
+        break;
+}
 
 
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 11);
-$pdf->Cell(0,25,$fecha_sola,0,1,'R');
+$pdf->Image("../src/img/cerdologo.jpg",5,10,20);
+$pdf->Cell(0,12,"",0,1,'R');
+$pdf->Cell(0,0,"PORKINO S.A.",0,0,'C');
+$pdf->Cell(0,0,$fecha_sola,0,1,'R');
+$pdf->Cell(0,15,"",0,1,'R');
 $pdf->SetFont('Arial', 'B', 11);
 $pdf->Cell(0,5,"REPORTE DE DOSIFICACION DE ALIMENTO",0,1,'C');
 $pdf->SetFont('Arial', 'B', 11);
-$pdf->Cell(40,25,"",0,1,'L');
+$pdf->Cell(40,15,"",0,1,'L');
 $pdf->SetFont('Arial', 'B', 11);
 $pdf->Cell(40,5,'A continuacion se encuentra el grafico de barra indicando los dias de mayor y menor dosificacion',0,2,'L');
 $pdf->SetFont('Arial', 'B', 11);
 $pdf->Cell(40,5,'tomando en el rango de fechas '.$_GET['inicio'].' y '.$_GET['fin'],0,2,'L');
 $pdf->Ln();
 $pdf->Image("../src/documents/".$date.".png",20,90,0);
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Ln();
+$pdf->Cell(0,25,"",0,1,'R');
+$pdf->Cell(40,5,"Dentro de la fecha ".$fecha_random." ".$tipo_dano." lo que produjo",0,1,'L');
+$pdf->Cell(40,5,"un error poco comun en el sistema.",0,1,'L');
 $pdf->Output('F', "../src/documents/pdfs/".$date.".pdf", true);
 
 
@@ -144,4 +190,18 @@ function error($mensaje){
 function printJSON($array){
     print_r(json_encode($array));
 }
+
+function randomDate($start_date, $end_date)
+{
+    // Convert to timetamps
+    $min = strtotime($start_date);
+    $max = strtotime($end_date);
+
+    // Generate random number using above bounds
+    $val = rand($min, $max);
+
+    // Convert back to desired date format
+    return date('Y-m-d', $val);
+}
+
 ?>

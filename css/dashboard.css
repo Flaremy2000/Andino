@@ -44,6 +44,8 @@ body::after {
 	content: "";
 	background: url(../src/img/cerdologo.webp);
 	opacity: 0.4;
+	background-position: 0%;
+	background-size: cover;
 	top: 0;
 	left: 0;
 	bottom: 0;
@@ -54,7 +56,7 @@ body::after {
 
 
   /* Circle Light */
-  .circle {
+  /* .circle {
 	margin-left: auto;
 	margin-right: auto;
 	height: 100px;
@@ -114,4 +116,4 @@ body::after {
 	to{
 		transform: rotate(360deg);
 	}
-  }
+  } */

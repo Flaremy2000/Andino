@@ -58,6 +58,15 @@ class usuario extends conexion{
         return $query;
     }
 
+
+    function editar_pass($id, $contra){
+        $query = $this->conexion->prepare("UPDATE `usuario` SET `contrasena` = :contrasena WHERE `usuario`.`Id_us` = :id");
+        $query->bindParam(':id', $id, PDO::PARAM_STR);
+        $query->bindParam(':contrasena', $contra, PDO::PARAM_STR);
+        $query->execute();
+        return $query;
+    }
+
 }
 
 ?>

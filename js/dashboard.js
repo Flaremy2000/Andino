@@ -49,6 +49,7 @@ $(document).ready(function(){
     
     $('#btrepr').click((e)=>{
         e.preventDefault();
+        $('#downloadbt').addClass('disabled');
         generar_reporte();
     });
 
@@ -83,13 +84,10 @@ function obtener_agua(tiempo){
             dataType: 'json',
             success: (res)=>{
                 $.each(res, (index, item)=>{
-                    console.log(item.estado);
                     if(item.estado == '0'){
-                        $("#bolaagu").removeClass('circle')
-                        .addClass('circle2')
+                        $("#GaugeMeter_gua").gaugeMeter({percent:5});
                     }else if(item.estado == '1'){
-                        $("#bolaagu").removeClass('circle2')
-                        .addClass('circle')
+                        $("#GaugeMeter_gua").gaugeMeter({percent:95});
                     }
                 });
             }
@@ -147,7 +145,7 @@ function obtener_usuarios(cargo){
         success: (res)=>{
             $.each(res, (index, item)=>{
                 if(item.mensaje == 'su'){
-                    $('#lista_user').append(`<div class="col-3">
+                    $('#lista_user').append(`<div class="col text-center">
                     <div class="card mt-3" style="width: 18rem;">
                     <div class="card-body">
                       <h5 class="card-title">No existe usuarios registrados</h5>
@@ -164,11 +162,11 @@ function obtener_usuarios(cargo){
                             cargo = 'ADMINISTRADOR';
                             break;
                         case '2':
-                            cargo = 'TRABAJADOR';
+                            cargo = 'EMPLEADO';
                             break;
                     }
                     if(sessionStorage.getItem("id") != item.id){
-                        $('#lista_user').append(`<div id='user${ item.id }' class="col-3">
+                        $('#lista_user').append(`<div id='user${ item.id }' class="col text-center">
                         <div class="card mt-3" style="width: 18rem;">
                         <div class="card-body">
                           <h5 class="card-title">${ item.nombre + ' <br> ' + item.apellido }</h5>
@@ -416,6 +414,7 @@ function generar_reporte(){
             $.each(resp, (index, item)=>{
                 if(item.mensaje == 'ss'){
                     $('#showreport').attr("src", "../src/documents/"+item.nombre+".png");
+                    $('#downloadbt').removeClass('disabled');
                     $('#downloadbt').attr("href", "../src/documents/pdfs/"+item.nombre+".pdf");
                 }else{
                     alert(`Error al generar el reporte`);
