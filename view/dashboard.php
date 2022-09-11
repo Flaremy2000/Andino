@@ -7,7 +7,7 @@
     <link href="../bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/dashboard.css" rel="stylesheet" />
     <script src="../bootstrap-5.2.0-dist/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="src/img/cerdologo.webp">
+    <link rel="shortcut icon" href="../src/img/cerdologo.webp">
     <script src="../js/jquery-3.6.0.min.js"></script>
     <title>Porkino</title>
 </head>
