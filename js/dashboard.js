@@ -58,6 +58,10 @@ $(document).ready(function(){
     obtener_usuarios(cargo);
     obtener_proveedores();
 
+    obtener_dosificaciones();
+
+    setInterval(obtener_dosificaciones, 1000);
+
 });
 // Se obtiene la ultima entrada de comida del sistema
 function obtener_comida(tiempo){
@@ -337,8 +341,6 @@ function eliminar_pr(ids){
     $('#elpr').val(ids);
     $("#modalprovel").modal('show');
 }
-
-
 // Es para crear un nuevo proveedor
 function guardar_proveedor(){
     // var parametros = .serialize();
@@ -422,4 +424,30 @@ function generar_reporte(){
             });
         }
     });
+}
+
+// Se muestra la lista de usuarios
+function obtener_dosificaciones(){
+    $.ajax({
+        url: '../microcontroladores/configuraciones.php?dosif',
+        method: 'get',
+        dataType: 'json',
+        success: (res)=>{
+            var dosi = 0
+            $('#listdosif').empty();
+            $.each(res, (index, item)=>{
+                dosi= dosi + 1;
+                if(item.mensaje == 'nd'){
+                    $('#listdosif').append(`<li class="list-group-item">No hay dosificaciones programadas</li>`);
+                }else{
+                    $('#listdosif').append(`<li class="list-group-item"> Dosificación ${ dosi } : ${ formato(item.fecha)}</li>`);
+                }
+            });
+        }
+    });
+
+}
+
+function formato(texto){
+  return texto.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
 }

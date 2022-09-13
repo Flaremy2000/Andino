@@ -37,6 +37,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['config'])){
     echo "dar=".$dar.";";
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['dosif'])){
+
+    header('Content-type: application/json');
+
+    $fechafinal = "";
+    $parametros = array();
+    
+    $fecha_fin = $visual->obtener_ultimados();
+
+    if ($fecha_fin->rowCount()){
+        while ($row = $fecha_fin->fetch(PDO::FETCH_ASSOC)){
+            $fechafinal = $row['tiempo_llenar'];
+        }
+    }
+
+    $conf = $visual->obtener_dosificaciones($inicio, $fechafinal);
+
+    if ($conf->rowCount()){
+        while ($row = $conf->fetch(PDO::FETCH_ASSOC)){
+            $item = array(
+                'mensaje'=> 'de',
+                'fecha' => $row['tiempo_llenar']
+            );
+            array_push($parametros, $item);
+        }
+    }else{
+        array_push($parametros, array('mensaje'=> 'nd'));
+    }
+    printJSON($parametros);
+}
+
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aguas'])){
@@ -55,6 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aguas'])){
     echo "agua=".$dar.";";
 }
 
-
+function printJSON($array){
+    print_r(json_encode($array));
+}
 ?>
 

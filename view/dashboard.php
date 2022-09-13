@@ -126,8 +126,32 @@
     </div>
     </div>
   </div>
+  
+  <div class="d-flex align-items-end flex-column bd-highlight mb-1 mt-2">
+  <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    PROXIMAS DOSIFICACIONES
+  </a>
+</div>
 
   <!--------- MODALES --->
+
+<!-- Modal Para el listado de dosificaciones -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">LISTADO DE DOSIFICACIONES PROGRAMADAS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <ul id="listdosif" class="list-group"></ul>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</a>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!--- Crear Usuario ---->
   <div class="modal fade" id="modalnuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -167,7 +191,7 @@
             <div class="form-floating">
               <select class="form-select mb-3" id="cargo" name="cargo">
                 <option value="1">ADMINISTRADOR</option>
-                <option value="2">TRABAJADOR</option>
+                <option value="2">EMPLEADO</option>
               </select>
               <label for="cargo">Cargo</label>
             </div>
@@ -279,7 +303,7 @@
             <div class="form-floating">
               <select class="form-select mb-3" id="ecargo" name="cargo">
                 <option value="1">ADMINISTRADOR</option>
-                <option value="2">TRABAJADOR</option>
+                <option value="2">EMPLEADO</option>
               </select>
               <label for="ecargo">Cargo</label>
             </div>

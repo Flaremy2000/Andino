@@ -16,6 +16,18 @@ class visualizador extends conexion{
         $query->execute();
         return $query;
     }
+    function obtener_dosificaciones($fecha, $fecha_fin){
+        $query = $this->conexion->prepare("SELECT * FROM `configuraciones` WHERE tiempo_llenar BETWEEN :tiempo_inicio AND :tiempo ORDER BY tiempo_llenar ASC LIMIT 5");
+        $query->bindParam(':tiempo_inicio', $fecha, PDO::PARAM_STR);
+        $query->bindParam(':tiempo', $fecha_fin, PDO::PARAM_STR);
+        $query->execute();
+        return $query;
+    }
+    function obtener_ultimados(){
+        $query = $this->conexion->prepare("SELECT * FROM `configuraciones` ORDER BY `configuraciones`.`tiempo_llenar` DESC LIMIT 1");
+        $query->execute();
+        return $query;
+    }
 
     function obtener_comedero($micro){
         $query = $this->conexion->prepare("SELECT * FROM comederos WHERE Id_micro= :id");
